@@ -1,10 +1,8 @@
 import streamlit as st
-import cryptography
 import base64
 import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
-
 
 def chacha20_encrypt(message: str, key: bytes) -> str:
     """
@@ -24,7 +22,6 @@ def chacha20_encrypt(message: str, key: bytes) -> str:
 
     return base64.b64encode(nonce + ciphertext).decode()
 
-
 def chacha20_decrypt(encoded_message: str, key: bytes) -> str:
     """
     Decrypt a message encrypted with the ChaCha20 cipher.
@@ -41,7 +38,6 @@ def chacha20_decrypt(encoded_message: str, key: bytes) -> str:
     cipher = Cipher(algorithms.ChaCha20(key, nonce[:12]), mode=None, backend=default_backend())
     decryptor = cipher.decryptor()
     return (decryptor.update(ciphertext) + decryptor.finalize()).decode()
-
 
 def main():
     st.title("ChaCha20 Cipher Messenger")
@@ -93,7 +89,6 @@ def main():
     st.sidebar.write("3. Share the **Base64-encoded** encrypted message.")
     st.sidebar.write("4. Use the 'Decrypt Message' tab with the same key to decrypt.")
     st.sidebar.write("5. Keep your key **secret** for security! 🔑")
-
 
 if __name__ == "__main__":
     main()
